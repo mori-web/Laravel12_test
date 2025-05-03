@@ -47,7 +47,7 @@
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
                             <a href="/" class="text-white text-xl font-bold">
-                                システム名
+                                Laravel
                             </a>
                         </div>
                     </div>
