@@ -1,0 +1,163 @@
+@extends('{{ extends }}')
+
+@section('content')
+    <div class="alert alert-danger text-center" role="alert">
+        <i class="fas fa-info-circle"></i>
+        アラートメッセージ。アラート表示時に使用してください
+    </div>
+    <x-parts.basic_card_layout>
+        <x-slot name="cardHeader">
+            <h4 class="mb-0"><i class="fas fa-database"></i> 一覧</h4>
+            <a href="{{ route('{{ createAction }}') }}" class="btn btn-primary">登録</a>
+        </x-slot>
+        <x-slot name="cardBody">
+            <div class="mt-3">
+                <form ref="searchForm" action="" method="GET" class="my-3">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="bus_reservation_number" class="form-label">バス会社予約番号</label>
+                            @include('components.form.text', ['name' => ''])
+                        </div>
+                        <div class="col-md-6">
+                            <label for="reservation_start_at" class="form-label">予約日</label>
+                            <div class="input-group">
+                                @include('components.form.date', ['name' => ''])
+                                <span class="input-group-text">〜</span>
+                                @include('components.form.date', ['name' => ''])
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="reservation_number" class="form-label">電話番号</label>
+                            @include('components.form.text', ['name' => ''])
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="outbound_departure" class="form-label">出発地</label>
+                                {{-- @include('components.form.select', ['name' => '']) --}}
+                                <select name="outbound_departure" id="outbound_departure" class="form-control">
+                                    <option value=""></option>
+                                    <option value="">新宿</option>
+                                    <option value="">なんば</option>
+                                    <option value="">名古屋</option>
+                                    <option value="">札幌</option>
+                                    <option value="">博多</option>
+                                    <option value="">金沢</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="outbound_destination" class="form-label">目的地</label>
+                                <select name="outbound_destination" id="outbound_destination" class="form-control">
+                                    <option value=""></option>
+                                    <option value="">新宿</option>
+                                    <option value="">なんば</option>
+                                    <option value="">名古屋</option>
+                                    <option value="">札幌</option>
+                                    <option value="">博多</option>
+                                    <option value="">金沢</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="payment_status" class="form-label">入金ステータス</label>
+                            <div class="d-flex align-items-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="payment_status[]" id="unpaid" value="unpaid">
+                                    <label class="form-check-label" for="unpaid">未入金</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="payment_status[]" id="paid" value="paid">
+                                    <label class="form-check-label" for="paid">入金済み</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="payment_status[]" id="partial_payment" value="partial_payment">
+                                    <label class="form-check-label" for="partial_payment">一部入金</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="payment_status[]" id="overpayment" value="overpayment">
+                                    <label class="form-check-label" for="overpayment">過剰入金</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary mr-3">検索</button>
+                            <a href="" class="btn btn-secondary">検索をリセット</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </x-slot>
+    </x-parts.basic_card_layout>
+    <x-parts.basic_card_layout>
+        <x-slot name="cardHeader">
+            <div class="row justify-content-start">
+                <h6>
+                    {{ ${{ modelNamePlural }}->total() . '件中' . ${{ modelNamePlural }}->firstItem() . '-' . ${{ modelNamePlural }}->lastItem() }}件
+                </h6>
+            </div>
+            <div class="row justify-content-end">
+                {{ ${{ modelNamePlural }}->links('pagination::bootstrap-4') }}
+            </div>
+        </x-slot>
+        <x-slot name="cardBody">
+            <x-parts.stripe_table_layout>
+                <x-slot name="thead">
+                    <tr>
+                        <th scope="col" class="text-nowrap">
+                            {{-- 昇順降順入れ替える場合使用。別途JS必須 --}}
+                            <input type="hidden" id="customerSortOrder" value="" name="customer_sort_order">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="">
+                                予約日時<i class="fas fa-sort ms-2"></i>
+                            </button>
+                        </th>
+                        <th scope="col" class="text-nowrap">予約番号</th>
+                        <th scope="col" class="text-nowrap">予約支店番号</th>
+                        <th scope="col" class="text-nowrap">搭乗者名</th>
+                        <th scope="col" class="text-nowrap">人数</th>
+                        <th scope="col" class="text-nowrap">往路搭乗日</th>
+                        <th scope="col" class="text-nowrap">復路搭乗日</th>
+                        <th scope="col" class="text-nowrap">予約STS</th>
+                        <th scope="col" class="text-nowrap">合計請求金額</th>
+                        <th scope="col" class="text-nowrap">詳細</th>
+                        <th scope="col" class="text-nowrap">編集</th>
+                        <th scope="col" class="text-nowrap">削除</th>
+                    </tr>
+                </x-slot>
+                <x-slot name="tbody">
+                    @if(${{ modelNamePlural }}->isNotEmpty())
+                        @foreach(${{ modelNamePlural }} as ${{ modelName }})
+                            <tr>
+                                <td class="text-nowrap px-2">{{ ${{ modelName }}->created_at }}</td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2"></td>
+                                <td class="text-nowrap px-2">
+                                    <a href="{{ route('{{ showAction }}', ${{ modelName }}) }}" class="btn btn-primary">詳細</a>
+                                </td>
+                                <td class="text-nowrap px-2"><a href="{{ route('{{ editAction }}', ${{ modelName }}) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a></td>
+                                <td class="text-nowrap px-2"><form action="{{ route('{{ destroyAction }}', ${{ modelName }}) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger ms-2" onclick="return confirm('本当に削除しますか？')"><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </x-slot>
+            </x-parts.stripe_table_layout>
+        </x-slot>
+    </x-parts.basic_card_layout>
+@endsection

@@ -1,0 +1,75 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Http\Controllers\Controller;
+use {{ requestNamespace }}\StoreRequest;
+use {{ requestNamespace }}\UpdateRequest;
+use App\Models\{{ modelName }};
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+
+class {{ modelName }}Controller extends Controller
+{
+    private {{ modelName }} ${{ camelModelName }};
+
+    public function __construct({{ modelName }} ${{ camelModelName }})
+    {
+        $this->{{ camelModelName }} = ${{ camelModelName }};
+    }
+
+    // 一覧
+    public function index(Request $request): View
+    {
+        return view('{{ indexViewName }}', [
+            '{{ camelModelNamePlural }}' => {{ modelName }}::latest()->paginate(12),
+        ]);
+    }
+
+    // 登録フォーム表示
+    public function create(): View
+    {
+        return view('{{ createViewName }}');
+    }
+
+    // 詳細表示
+    public function show({{ modelName }} ${{ camelModelName }}): View
+    {
+        return view('{{ showViewName }}', [
+            '{{ camelModelName }}' => ${{ camelModelName }},
+        ]);
+    }
+
+    // 登録
+    public function store(StoreRequest $request): RedirectResponse
+    {
+        $this->{{ camelModelName }}->fill($request->substitutable())->save();
+
+        return to_route('{{ indexViewName }}')->with('status', '作成しました');
+    }
+
+    // 編集フォーム表示
+    public function edit({{ modelName }} ${{ camelModelName }}): View
+    {
+        return view('{{ editViewName }}', [
+            '{{ camelModelName }}' => ${{ camelModelName }},
+        ]);
+    }
+
+    // 更新
+    public function update(UpdateRequest $request, {{ modelName }} ${{ camelModelName }}): RedirectResponse
+    {
+        ${{ camelModelName }}->fill($request->substitutable())->save();
+
+        return back()->with('status', '更新しました');
+    }
+
+    // 削除
+    public function destroy({{ modelName }} ${{ camelModelName }}): RedirectResponse
+    {
+        ${{ camelModelName }}->delete();
+
+        return to_route('{{ indexViewName }}')->with('status', '削除しました');
+    }
+}

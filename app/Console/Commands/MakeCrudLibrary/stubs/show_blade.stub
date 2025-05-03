@@ -1,0 +1,94 @@
+@extends('{{ extends }}')
+
+@section('content')
+    <x-parts.basic_card_layout>
+        <x-slot name="cardHeader">
+            <h4 class="mb-0"><i class="fas fa-cogs"></i> 〜〜詳細</h4>
+            <a class="btn btn-secondary" href="{{ route('{{ indexAction }}') }}">一覧へ戻る</a>
+        </x-slot>
+        <x-slot name="cardBody">
+            <p>{{ ${{ camelModelName }}->title }}</p>
+            <div class="form-group row">
+                <div class="col-12">
+                    <div class="row">
+                        <strong for="name" class="col-3 col-xl-2 col-form-label">プラン名</strong>
+                        <div class="col-md-9 col-form-label">テスト</div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <strong for="description" class="col-3 col-xl-2 col-form-label">プランの<br class="d-block d-xl-none">説明</strong>
+                        <div class="col-md-9 col-form-label">テスト</div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row">
+                        <strong for="room_id" class="col-md-2 col-form-label">部屋タイプ</strong>
+                        <div class="col-md-9 col-form-label">テスト</div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <strong for="is_room_rate" class="col-md-2 col-form-label">課金種別</strong>
+                        <span class="col-md-10 col-form-label">テスト</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <strong for="is_sale" class="col-md-4 col-form-label">
+                            <div>販売<br class="d-block d-xl-none">ステータス</div>
+                        </strong>
+                        <div class="col-md-8 col-form-label"><span class="">テスト</span></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <strong for="sales_start_at" class="col-md-4 col-form-label">販売期間</strong>
+                        <div class="col-md-7">
+                            <div class="input-group col-form-label">テスト</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <strong for="is_lodgment" class="col-md-4 col-form-label">宿泊対象期間</strong>
+                        <span class="col-md-7 col-form-label">テスト</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <strong for="is_sale" class="col-md-4 col-form-label">宿泊対象日</strong>
+                        <div class="col-md-7 col-form-label"><span class="">2024年1月〜2025年1月</span></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <strong for="" class="col-md-4 col-form-label">予約開始日</strong>
+                        <div class="col-md-7 row">
+                            <div class="input-group mb-2 col-form-label">
+                                    <span class="">チェックイン</span>3<span class="">日前の</span>10:00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <strong for="" class="col-md-4 col-form-label">予約終了日</strong>
+                        <div class="col-md-7 row">
+                            <div class="input-group mb-2 col-form-label">
+                                <span class="">チェックイン</span>1<span class="">日前の</span>10:00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-2 mt-xl-0 col-xl-6">
+                    <div class="row">
+                        <strong for="lodgment_alert" class="col-2 col-xl-4 col-form-label">宿泊制限</strong>
+                        <div class="col-9 col-xl-7 col-form-label">テスト</div>
+                    </div>
+                </div>
+            </div>
+        </x-slot>
+    </x-parts.basic_card_layout>
+@endsection
