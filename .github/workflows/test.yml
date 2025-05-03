@@ -2,7 +2,17 @@
 name: Run Laravel Tests
 
 # いつ実行するか
-on: [push, pull_request]
+on:
+  # mainブランチにpushしたとき
+  push:
+    branches:
+      - main
+  # 
+  pull_request:
+    types:
+      - opened      #新しいプルリクエストが作成されたとき
+      - synchronize #プルリクエストに新しいコミットがプッシュされたとき
+      - reopened    #一度閉じられたプルリクエストが再オープンされたとき
 
 jobs:
   # ジョブ名
