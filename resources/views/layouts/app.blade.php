@@ -16,20 +16,13 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    {{-- bootstrap5 --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
-
     <!-- font awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"
         integrity="sha384-ujbKXb9V3HdK7jcWL6kHL1c+2Lj4MR4Gkjl7UtwpSHg/ClpViddK9TI7yU53frPN" crossorigin="anonymous">
     </script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite('resources/css/app.css')
 
     {{-- Vue読込み --}}
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.31/dist/vue.global.prod.js"></script>
@@ -46,56 +39,52 @@
     <script src="https://cdn.jsdelivr.net/npm/vuedraggable@4.0.2/dist/vuedraggable.umd.min.js"></script>
 </head>
 
-<body>
+<body class="bg-gray-50">
     <div id="app">
-        <nav class="navbar navbar-expand-md shadow-sm py-0 bg-primary text-white">
-            <div class="">
-                <a href="">
-                    <h3 class="text-light mt-2">システム名</h3>
-                    {{-- todo:画像の場合は下記を使用 --}}
-                    {{-- <img src="" alt="title-logo" style="width: auto; height: 60px;" class="d-block"> --}}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            ユーザー
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="">
-                                {{ __('Password Change') }}
+        <nav class="bg-purple-400 shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex">
+                        <div class="flex-shrink-0 flex items-center">
+                            <a href="/" class="text-white text-xl font-bold">
+                                システム名
                             </a>
-                            <a class="dropdown-item" href=""
-                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="" method="POST" class="d-none">
-                                @csrf
-                            </form>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="ml-3 relative">
+                            <div>
+                                <button type="button" class="flex text-sm rounded-full text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-purple-400 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                    <span class="sr-only">ユーザー</span>
+                                    <span class="text-white">ユーザー</span>
+                                </button>
+                            </div>
+                            <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">パスワード変更</a>
+                                <form method="POST" action="#" class="block">
+                                    @csrf
+                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                        ログアウト
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
         {{-- フラッシュメッセージ --}}
         {{-- todo:位置確認 --}}
         @include('components.parts.flash_message')
 
-        <main class="container-fluid">
-            <div id="content">
+        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div class="px-4 py-6 sm:px-0">
                 <div class="my-4">
                     <div class="row justify-content-center">
                         {{-- @if (auth('admin')->check()) --}}
-                            <div class="col-md-2">
+                            {{-- <div class="col-md-2">
                                 @include('components.parts.admin_left_side_menu')
-                            </div>
+                            </div> --}}
                         {{-- @endif --}}
                         <div class="col-md-10">
                             @yield('content')
