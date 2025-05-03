@@ -1,0 +1,41 @@
+# ワークフローの表示名(GitHubの「Actions」タブにこの名前で表示される)
+name: Run Laravel Tests
+
+# いつ実行するか
+on: [push, pull_request]
+
+jobs:
+  # ジョブ名
+  laravel-tests:
+    
+    #どんなOS環境で実行するか
+    runs-on: ubuntu-latest
+
+    steps:
+      # ①GitHubリポジトリの内容を、CIサーバーにダウンロード(チェックアウト＝取り出す)
+      - uses: actions/checkout@v3
+
+      # ②CIサーバーにPHPをインストール
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      # ③Composerをvendorにインストール
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-interaction --no-suggest
+
+      # ④Laravelのセットアップ
+      - name: Set up application
+        run: |
+          cp .env.testing .env
+          php artisan key:generate
+
+      # ⑤テーブル構造を構築
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      # ⑥テスト実行
+      - name: Run tests
+        run: php artisan test
