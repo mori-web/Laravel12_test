@@ -10,6 +10,7 @@ class TodoTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
+    // Todoの登録処理テスト
     public function test_can_create_todo(): void
     {
         $title = $this->faker->sentence;
