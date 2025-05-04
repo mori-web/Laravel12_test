@@ -7,17 +7,21 @@ on:
   push:
     branches:
       - main
-  # 
+  #
   pull_request:
     types:
       - opened      #新しいプルリクエストが作成されたとき
       - synchronize #プルリクエストに新しいコミットがプッシュされたとき
       - reopened    #一度閉じられたプルリクエストが再オープンされたとき
+  # # 日本時間で毎晩12時に実行
+  # schedule:
+  #   - cron: '0 12 * * *'
+  
 
 jobs:
   # ジョブ名
   laravel-tests:
-    
+
     #どんなOS環境で実行するか
     runs-on: ubuntu-latest
 
@@ -27,7 +31,7 @@ jobs:
 
       # ②CIサーバーにPHPをインストール
       - name: Set up PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@v2 #usesはGithubが用意してくれた便利アクション
         with:
           php-version: 8.2
 
