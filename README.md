@@ -1,7 +1,7 @@
 ### TestWorkFlow
 [![Run Laravel Tests](https://github.com/mori-web/Laravel12_test/actions/workflows/test.yml/badge.svg)](https://github.com/mori-web/Laravel12_test/actions/workflows/test.yml)
 
-# 標準リポジトリ
+<!-- # 標準リポジトリ
 
 このリポジトリは、社内の新規プロジェクト用の「標準リポジトリ」としてgithubにてテンプレートリポジトリとして設定されています。
 
@@ -62,4 +62,4 @@
 6. このリポジトリの中身について
    1. 基本的には「[Laravelリポジトリ新規作成から初期設定までのマニュアル.md](https://github.com/forsisters/minsys-dev-standard/blob/main/Laravel%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90%E3%81%8B%E3%82%89%E5%88%9D%E6%9C%9F%E8%A8%AD%E5%AE%9A%E3%81%BE%E3%81%A7%E3%81%AE%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB.md)」の手順で作成されています
 7. メジャーアップデートに関して
-   1. laravelの次のバージョン（12）が出たときに対応方法を考えます
+   1. laravelの次のバージョン（12）が出たときに対応方法を考えます -->
