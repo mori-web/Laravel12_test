@@ -28,8 +28,5 @@ class AppServiceProvider extends ServiceProvider
          * 3. 存在しないプロパティへのアクセスを防止
          */
         Model::shouldBeStrict(! $this->app->isProduction());
-
-        // @vite()を使用中の場合に「public/build/manifest.json」の有無をチェック
-        $this->app->bind(Vite::class, CustomVite::class);
     }
 }
