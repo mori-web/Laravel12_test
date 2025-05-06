@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Vite;
+use App\Support\CustomVite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +28,8 @@ class AppServiceProvider extends ServiceProvider
          * 3. 存在しないプロパティへのアクセスを防止
          */
         Model::shouldBeStrict(! $this->app->isProduction());
+
+        // @vite()を使用中の場合に「public/build/manifest.json」の有無をチェック
+        $this->app->bind(Vite::class, CustomVite::class);
     }
 }
