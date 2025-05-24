@@ -12,7 +12,7 @@
     </div>
     <div class="border-t border-gray-200">
         <div class="px-4 py-5 sm:p-6">
-            <form method="POST" action="{{ route('todos.store') }}" class="space-y-6">
+            <form method="POST" action="{{ route('todos.store') }}" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
                 <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -41,6 +41,27 @@
                             @enderror
                         </div>
                     </div>
+
+                    <!-- aws s3へアップロード処理 -->
+                    <div class="sm:col-span-4">
+                        <label for="image" class="block text-sm font-medium text-gray-700">
+                            画像<span class="text-red-500">*</span>
+                        </label>
+                        <div class="mt-1">
+                            <input type="file" name="image" id="image" accept="image/*" required
+                                class="block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-purple-50 file:text-purple-700
+                                hover:file:bg-purple-100
+                                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                        </div>
+                        @error('image')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                 </div>
 
                 <div class="flex justify-center">

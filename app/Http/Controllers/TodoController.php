@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Todo;
+use Aws\S3\S3Client;
+use Illuminate\View\View;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\TodoController\StoreRequest;
 use App\Http\Requests\TodoController\UpdateRequest;
-use App\Models\Todo;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 
 class TodoController extends Controller
 {
@@ -44,9 +46,33 @@ class TodoController extends Controller
     // 登録
     public function store(StoreRequest $request): RedirectResponse
     {
-        $this->todo->fill($request->substitutable())->save();
+        try {
+            $imageUrl = null;
 
-        return to_route('todos.index')->with('status', '作成しました');
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $fileName = time() . '_' . $image->getClientOriginalName();
+
+                $s3 = Storage::disk('s3');
+                $result = $s3->putFileAs('', $image, $fileName);
+
+                if ($result) {
+                    $imageUrl = $s3->url($result);
+                    \Log::info('画像アップロード成功: ' . $imageUrl);
+                }
+            }
+
+            $todoData = $request->substitutable();
+            $todoData['image'] = $imageUrl;
+
+            $this->todo->fill($todoData)->save();
+
+            return to_route('todos.index')->with('status', '作成しました');
+
+        } catch (\Exception $e) {
+            \Log::error('Todo作成エラー: ' . $e->getMessage());
+            return back()->withInput()->with('error', '作成に失敗しました');
+        }
     }
 
     // 編集フォーム表示

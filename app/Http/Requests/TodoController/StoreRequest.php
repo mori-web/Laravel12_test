@@ -24,8 +24,15 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'message' => ['required', 'string', 'max:3000'],
+            'title' => ['nullable', 'string', 'max:255'],
+            'message' => ['nullable', 'string', 'max:3000'],
+            'image' => [
+                'nullable',
+                'file',
+                'image',
+                'mimes:jpeg,jpg,png,gif,webp',
+                'max:2048'
+            ],
         ];
     }
 
@@ -37,6 +44,7 @@ class StoreRequest extends FormRequest
         return $this->only([
             'title',
             'message',
+            'image',
         ]);
     }
 }
