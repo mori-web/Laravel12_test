@@ -4,7 +4,7 @@
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Todo登録
+            Googleカレンダーとの連携
         </h3>
         <a href="{{ route('todos.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
             一覧へ戻る
@@ -43,7 +43,7 @@
                     </div>
 
                     <!-- aws s3へアップロード処理 -->
-                    <div class="sm:col-span-4">
+                    {{-- <div class="sm:col-span-4">
                         <label for="image" class="block text-sm font-medium text-gray-700">
                             画像<span class="text-red-500">*</span>
                         </label>
@@ -60,7 +60,7 @@
                         @error('image')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> --}}
 
                 </div>
 
